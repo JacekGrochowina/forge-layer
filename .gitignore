@@ -67,3 +67,5 @@ playwright/.cache/
 # npm
 .npm/
 .angular
+
+__screenshots__/
