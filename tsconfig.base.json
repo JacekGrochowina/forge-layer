@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "strict": false,
     "paths": {
-      "@forge-layer/core": ["./core/src/index.ts"]
+      "@forge-layer/angular": ["./angular/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

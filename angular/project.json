@@ -1,7 +1,7 @@
 {
-  "name": "core",
+  "name": "angular",
   "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "core/src",
+  "sourceRoot": "angular/src",
   "prefix": "forge",
   "projectType": "library",
   "release": {
@@ -18,12 +18,12 @@
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "defaultConfiguration": "production",
       "options": {
-        "project": "core/ng-package.json",
-        "tsConfig": "core/tsconfig.lib.json"
+        "project": "angular/ng-package.json",
+        "tsConfig": "angular/tsconfig.lib.json"
       },
       "configurations": {
         "production": {
-          "tsConfig": "core/tsconfig.lib.prod.json"
+          "tsConfig": "angular/tsconfig.lib.prod.json"
         },
         "development": {}
       }
