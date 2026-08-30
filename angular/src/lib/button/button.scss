@@ -1,0 +1,153 @@
+// Angular Material exposes one CSS token namespace per button appearance
+// (`text`, `filled`, `protected` = elevated, `outlined`, `tonal`). Instead of
+// styling every variant x color x size combination, we declare a small set of
+// role variables and map them onto those namespaces once.
+$appearances: 'text', 'filled', 'protected', 'outlined', 'tonal';
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+  max-width: 100%;
+
+  // Color roles, resolved from the consuming application's `mat.theme()` output.
+  --forge-button-accent: var(--mat-sys-primary);
+  --forge-button-on-accent: var(--mat-sys-on-primary);
+  --forge-button-container: var(--mat-sys-primary-container);
+  --forge-button-on-container: var(--mat-sys-on-primary-container);
+
+  // Label/icon color. Variants that paint their container override this.
+  --forge-button-foreground: var(--forge-button-accent);
+
+  // Size roles. The values below are the `md` preset.
+  --forge-button-height: 40px;
+  --forge-button-padding-inline: 16px;
+  --forge-button-padding-block: 6px;
+  --forge-button-label-size: 0.875rem;
+  --forge-button-icon-size: 20px;
+  --forge-button-icon-spacing: 8px;
+  --forge-button-icon-offset: -6px;
+
+  @each $appearance in $appearances {
+    --mat-button-#{$appearance}-container-height: var(--forge-button-height);
+    --mat-button-#{$appearance}-horizontal-padding: var(
+      --forge-button-padding-inline
+    );
+    --mat-button-#{$appearance}-icon-spacing: var(--forge-button-icon-spacing);
+    --mat-button-#{$appearance}-icon-offset: var(--forge-button-icon-offset);
+    --mat-button-#{$appearance}-label-text-size: var(--forge-button-label-size);
+    --mat-button-#{$appearance}-label-text-color: var(
+      --forge-button-foreground
+    );
+    --mat-button-#{$appearance}-state-layer-color: var(
+      --forge-button-foreground
+    );
+    --mat-button-#{$appearance}-ripple-color: color-mix(
+      in srgb,
+      var(--forge-button-foreground) 12%,
+      transparent
+    );
+  }
+
+  // Material keeps a separate padding token for text buttons that contain an icon.
+  --mat-button-text-with-icon-horizontal-padding: var(
+    --forge-button-padding-inline
+  );
+
+  // Icon buttons use their own namespace and are sized by their state layer.
+  --mat-icon-button-state-layer-size: var(--forge-button-height);
+  --mat-icon-button-icon-size: var(--forge-button-icon-size);
+  --mat-icon-button-icon-color: var(--forge-button-foreground);
+  --mat-icon-button-state-layer-color: var(--forge-button-foreground);
+  --mat-icon-button-ripple-color: color-mix(
+    in srgb,
+    var(--forge-button-foreground) 12%,
+    transparent
+  );
+}
+
+// --- Semantic colors -------------------------------------------------------
+// Only the four role variables change; every token above follows automatically.
+
+:host([data-color='secondary']) {
+  --forge-button-accent: var(--mat-sys-secondary);
+  --forge-button-on-accent: var(--mat-sys-on-secondary);
+  --forge-button-container: var(--mat-sys-secondary-container);
+  --forge-button-on-container: var(--mat-sys-on-secondary-container);
+}
+
+:host([data-color='tertiary']) {
+  --forge-button-accent: var(--mat-sys-tertiary);
+  --forge-button-on-accent: var(--mat-sys-on-tertiary);
+  --forge-button-container: var(--mat-sys-tertiary-container);
+  --forge-button-on-container: var(--mat-sys-on-tertiary-container);
+}
+
+:host([data-color='error']) {
+  --forge-button-accent: var(--mat-sys-error);
+  --forge-button-on-accent: var(--mat-sys-on-error);
+  --forge-button-container: var(--mat-sys-error-container);
+  --forge-button-on-container: var(--mat-sys-on-error-container);
+}
+
+// --- Variants --------------------------------------------------------------
+// `text`, `outlined`, `elevated` and `icon` keep the M3 defaults: a neutral
+// container (or none) with an accent-colored label. Only the two variants that
+// paint their container need to flip the foreground role.
+
+:host([data-variant='filled']) {
+  --forge-button-foreground: var(--forge-button-on-accent);
+  --mat-button-filled-container-color: var(--forge-button-accent);
+}
+
+:host([data-variant='tonal']) {
+  --forge-button-foreground: var(--forge-button-on-container);
+  --mat-button-tonal-container-color: var(--forge-button-container);
+}
+
+// --- Sizes -----------------------------------------------------------------
+
+:host([data-size='sm']) {
+  --forge-button-height: 32px;
+  --forge-button-padding-inline: 12px;
+  --forge-button-padding-block: 4px;
+  --forge-button-label-size: 0.8125rem;
+  --forge-button-icon-size: 18px;
+  --forge-button-icon-spacing: 6px;
+  --forge-button-icon-offset: -4px;
+}
+
+:host([data-size='lg']) {
+  --forge-button-height: 48px;
+  --forge-button-padding-inline: 24px;
+  --forge-button-padding-block: 8px;
+  --forge-button-label-size: 1rem;
+  --forge-button-icon-size: 24px;
+  --forge-button-icon-spacing: 10px;
+  --forge-button-icon-offset: -8px;
+}
+
+// --- Element-level adjustments ---------------------------------------------
+
+.forge-button__control {
+  max-width: 100%;
+}
+
+// Material pins the button to a fixed height. Swapping that for a minimum plus
+// real vertical padding keeps the size presets intact while letting long labels
+// wrap instead of overflowing. Icon buttons stay circular and are left alone.
+:host(:not([data-variant='icon'])) .forge-button__control {
+  height: auto;
+  min-height: var(--forge-button-height);
+  padding-block: var(--forge-button-padding-block);
+}
+
+:host(:not([data-variant='icon'])) .forge-button__control .mat-icon {
+  font-size: var(--forge-button-icon-size);
+  width: var(--forge-button-icon-size);
+  height: var(--forge-button-icon-size);
+}
+
+// Follow the button's own (possibly disabled) label color.
+.forge-button__spinner {
+  --mat-progress-spinner-active-indicator-color: currentColor;
+}

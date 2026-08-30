@@ -1,0 +1,45 @@
+@if (isIconOnly()) {
+<button
+  matIconButton
+  class="forge-button__control"
+  [type]="type()"
+  [disabled]="isDisabled()"
+  [showProgress]="loading()"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-labelledby]="ariaLabelledby()"
+>
+  @if (icon(); as iconName) {
+  <mat-icon>{{ iconName }}</mat-icon>
+  } @if (loading()) {
+  <mat-spinner
+    progressIndicator
+    class="forge-button__spinner"
+    [diameter]="spinnerDiameter()"
+  />
+  }
+</button>
+} @else {
+<button
+  class="forge-button__control"
+  [matButton]="appearance()"
+  [type]="type()"
+  [disabled]="isDisabled()"
+  [showProgress]="loading()"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-labelledby]="ariaLabelledby()"
+>
+  @if (startIcon(); as iconName) {
+  <mat-icon>{{ iconName }}</mat-icon>
+  }
+  <ng-content />
+  @if (endIcon(); as iconName) {
+  <mat-icon iconPositionEnd>{{ iconName }}</mat-icon>
+  } @if (loading()) {
+  <mat-spinner
+    progressIndicator
+    class="forge-button__spinner"
+    [diameter]="spinnerDiameter()"
+  />
+  }
+</button>
+}
