@@ -66,3 +66,4 @@ playwright/.cache/
 
 # npm
 .npm/
+.angular

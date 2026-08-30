@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "devDependencies": {
+    "@angular-devkit/core": "~22.0.4",
+    "@nx/angular": "^23.1.2",
     "nx": "23.1.2"
-  }
+  },
+  "dependencies": {}
 }
