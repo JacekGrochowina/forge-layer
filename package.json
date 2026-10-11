@@ -2,6 +2,12 @@
   "name": "forge-layer",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": ">=24.15.0 <25"
+  },
+  "scripts": {
+    "verify": "nx run-many -t lint test build -p angular demo --skip-nx-cache --parallel=2"
+  },
   "devDependencies": {
     "@angular-devkit/core": "~22.0.4",
     "@angular-devkit/schematics": "~22.0.4",
