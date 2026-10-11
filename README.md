@@ -36,12 +36,52 @@ Forge Layer aims to provide that additional layer.
 - Angular CDK
 - TypeScript
 
-## Development and verification
+## Running locally
 
 Use Node.js 24 LTS (24.15.0 or newer within 24.x) and npm 11.
 The reference version is Node.js 24.16.0, pinned in `.nvmrc`.
 With nvm, run `nvm install` and `nvm use`; with nvm-windows, run
 `nvm install 24.16.0` and `nvm use 24.16.0`.
+
+Run the following commands from the repository root to install dependencies
+and start the demo application:
+
+```sh
+npm ci
+npx nx serve demo
+```
+
+Open [http://localhost:4200](http://localhost:4200) in your browser.
+The server uses the development configuration and reloads the application
+when source files change. Stop it with `Ctrl+C`.
+
+To use a different port:
+
+```sh
+npx nx serve demo --port=4300
+```
+
+Then open [http://localhost:4300](http://localhost:4300).
+
+The workspace contains one runnable application, `demo`. The `angular` project
+is the component library imported directly from its source by the demo, so
+it does not need a separate server or build before starting the application.
+The `demo-e2e` project contains Playwright tests, described below.
+
+To build and serve the production version locally:
+
+```sh
+npx nx run demo:serve-static
+```
+
+This builds the demo with the default production configuration and serves
+`dist/demo/browser` at [http://localhost:4200](http://localhost:4200).
+Stop any other server using port 4200 before running this command.
+
+On Windows PowerShell, use `npm.cmd` and `npx.cmd` if execution policy blocks
+the corresponding `.ps1` wrappers; no execution-policy change is needed.
+
+## Development and verification
 
 From a clean checkout, install the exact dependencies in `package-lock.json`
 and run all six checks without reusing Nx task results:
@@ -65,11 +105,6 @@ npx nx build demo --configuration=production --skip-nx-cache
 Tests run once (`watch: false`). Builds use the production configuration by
 default and write to `dist/angular` and `dist/demo`. Verification exits with
 a nonzero status if any check fails. E2E tests are separate from these checks.
-
-On Windows PowerShell, use `npm.cmd` and `npx.cmd` if execution policy blocks
-the corresponding `.ps1` wrappers; no execution-policy change is needed.
-
-Start the demo with `npx nx serve demo` and open `http://localhost:4200`.
 
 Run the demo E2E scenarios in Chromium:
 
