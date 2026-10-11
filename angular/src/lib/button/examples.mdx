@@ -1,0 +1,29 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import * as Button from './button.stories';
+
+<Meta of={Button} name="Examples" />
+
+# Examples
+
+## Variants
+
+<Canvas of={Button.Variants} />
+
+## Semantic colors
+
+<Canvas of={Button.Colors} />
+
+## Sizes
+
+<Canvas of={Button.Sizes} />
+
+## Leading and trailing icons
+
+<Canvas of={Button.WithIcon} />
+<Canvas of={Button.TrailingIcon} />
+
+## Icon-only action
+
+Always provide an accessible name describing the action.
+
+<Canvas of={Button.IconOnly} />

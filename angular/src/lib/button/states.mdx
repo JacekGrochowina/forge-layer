@@ -1,0 +1,30 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import * as Button from './button.stories';
+
+<Meta of={Button} name="States" />
+
+# States
+
+## Default
+
+<Canvas of={Button.Playground} />
+
+## Disabled
+
+Disabled buttons cannot be activated or reached with Tab. Explain elsewhere
+why the action is unavailable when the reason is not obvious.
+
+<Canvas of={Button.Disabled} />
+
+## Loading
+
+Loading replaces the icon with a spinner, preserves the label and prevents
+repeat activation. Provide task progress or completion feedback in the page.
+
+<Canvas of={Button.Loading} />
+
+## Hover, pressed and focus
+
+Hover or press the default button to inspect Material interaction states.
+Use Tab to inspect the visible keyboard focus indicator. These are native
+interaction states rather than simulated CSS classes.

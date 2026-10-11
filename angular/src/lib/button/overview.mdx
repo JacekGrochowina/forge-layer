@@ -1,0 +1,26 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import * as Button from './button.stories';
+
+<Meta of={Button} name="Overview" />
+
+# Button
+
+`forge-button` is a native button built on Angular Material. Use it for actions,
+form submission and commands. Choose one prominent primary action per view;
+use outlined or text buttons for secondary actions.
+
+<Canvas of={Button.Playground} />
+
+```ts
+import { ForgeButton } from '@forge-layer/angular';
+
+// Add ForgeButton to your standalone component's imports.
+```
+
+```html
+<forge-button icon="save" (click)="save()">Save changes</forge-button>
+```
+
+The component supports six variants, four semantic colors, three sizes,
+icons and loading/disabled states. It requires an Angular Material theme
+and the Material Icons font when using icon ligatures.

@@ -13,6 +13,24 @@
   },
   "tags": [],
   "targets": {
+    "storybook": {
+      "executor": "@storybook/angular-vite:start-storybook",
+      "continuous": true,
+      "options": {
+        "configDir": "angular/.storybook",
+        "port": 6006,
+        "tsConfig": "angular/.storybook/tsconfig.json"
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular-vite:build-storybook",
+      "outputs": ["{workspaceRoot}/dist/storybook/angular"],
+      "options": {
+        "configDir": "angular/.storybook",
+        "outputDir": "dist/storybook/angular",
+        "tsConfig": "angular/.storybook/tsconfig.json"
+      }
+    },
     "build": {
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],

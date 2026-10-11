@@ -1,0 +1,30 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import * as Button from './button.stories';
+
+<Meta of={Button} name="Accessibility" />
+
+# Accessibility
+
+- The underlying native button provides button semantics and Enter/Space activation.
+- Use descriptive visible text. For icon-only buttons, set `aria-label` or
+  `aria-labelledby` pointing to an existing element.
+- Keep the focus indicator visible. Disabled and loading buttons are removed
+  from the keyboard tab order by their native disabled state.
+- Loading does not announce task progress automatically. Add an appropriate
+  live region in the consuming view for progress and completion messages.
+- Do not communicate meaning through color alone. Check contrast in the
+  application's actual theme, especially after overriding theme tokens.
+
+## Keyboard activation
+
+This story checks focus and activation with Enter and Space.
+
+<Canvas of={Button.Keyboard} />
+
+## Accessible icon-only button
+
+<Canvas of={Button.IconOnly} />
+
+Open any individual story and use the Accessibility panel for automated
+checks. Also manually check Tab order, visible focus, screen reader naming
+and the context of the action. Automated checks cannot cover every aspect.

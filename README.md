@@ -81,6 +81,37 @@ Stop any other server using port 4200 before running this command.
 On Windows PowerShell, use `npm.cmd` and `npx.cmd` if execution policy blocks
 the corresponding `.ps1` wrappers; no execution-policy change is needed.
 
+## Storybook
+
+Run `npm run storybook` and open http://localhost:6006.
+Build the static documentation with `npm run build-storybook`; output is in
+`dist/storybook/angular`.
+
+Each component must provide five documentation pages, in this order:
+
+1. **Overview** — purpose, recommended usage and a basic example.
+2. **API** — inputs, outputs, types, defaults and content projection.
+3. **Examples** — supported variants and real usage examples.
+4. **States** — default, disabled, loading and applicable interaction states.
+5. **Accessibility** — semantics, naming, keyboard behavior and manual checks.
+
+Use `angular/src/lib/button` as the reference when adding components. Place
+`<component>.stories.ts` and the five MDX pages alongside the component;
+set the story title to `Components/<Component>` and attach each MDX page
+with `<Meta of={ComponentStories} name="Overview" />` (using the appropriate
+page name). The shared configuration discovers new files automatically and
+keeps the five documentation pages in order. Stories are excluded from the
+published library and its unit test compilation.
+
+Include a controllable playground, representative examples, relevant state
+stories and keyboard interaction checks. The Accessibility addon is enabled
+for every component. Verify automated results plus keyboard focus, screen
+reader naming and contrast in the application's theme. Icon fonts in the
+preview are loaded from Google Fonts, as in the demo.
+
+The configuration uses Storybook 10.6's Angular Vite framework, currently in
+preview, with Angular's default zoneless change detection.
+
 ## Development and verification
 
 From a clean checkout, install the exact dependencies in `package-lock.json`

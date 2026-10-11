@@ -1,0 +1,32 @@
+import { Meta, Controls } from '@storybook/addon-docs/blocks';
+import * as Button from './button.stories';
+
+<Meta of={Button} name="API" />
+
+# API
+
+Selector: `forge-button`. Import: `ForgeButton` from `@forge-layer/angular`.
+
+| Input             | Values                                                    | Default     |
+| ----------------- | --------------------------------------------------------- | ----------- |
+| `variant`         | `text`, `elevated`, `outlined`, `filled`, `tonal`, `icon` | `filled`    |
+| `color`           | `primary`, `secondary`, `tertiary`, `error`               | `primary`   |
+| `size`            | `sm`, `md`, `lg`                                          | `md`        |
+| `loading`         | boolean; shows a spinner and disables interaction         | `false`     |
+| `disabled`        | boolean                                                   | `false`     |
+| `icon`            | Material Icons ligature; required for the icon variant    | `undefined` |
+| `iconPosition`    | `start`, `end`                                            | `start`     |
+| `type`            | `button`, `submit`, `reset`                               | `button`    |
+| `aria-label`      | Accessible name forwarded to the native button            | `undefined` |
+| `aria-labelledby` | ID reference forwarded to the native button               | `undefined` |
+
+Content is projected as the visible label. `(click)` is a bubbling native
+event; there is no custom output. Loading also disables the native button.
+`iconPosition` does not affect the icon-only variant.
+
+## Try the inputs
+
+`label` is a story helper for projected content. `ariaLabel` and
+`ariaLabelledby` controls bind to the corresponding hyphenated input aliases.
+
+<Controls of={Button.Playground} />
