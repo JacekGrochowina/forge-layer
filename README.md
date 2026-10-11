@@ -71,6 +71,17 @@ the corresponding `.ps1` wrappers; no execution-policy change is needed.
 
 Start the demo with `npx nx serve demo` and open `http://localhost:4200`.
 
+Run the demo E2E scenarios in Chromium:
+
+```sh
+npx playwright install chromium
+npx nx run demo-e2e:e2e --skip-nx-cache -- --project=chromium
+```
+
+Playwright starts and stops the demo server. Port 4200 must be available.
+The scenarios cover the home page, navigation to Button, playground variants,
+sizes and colors, and loading/disabled states.
+
 ## License
 
 TBD

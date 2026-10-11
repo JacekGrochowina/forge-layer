@@ -33,7 +33,8 @@ export default defineConfig({
   webServer: {
     command: 'npx nx run demo:serve',
     url: 'http://localhost:4200',
-    reuseExistingServer: true,
+    // Let Playwright own the server lifecycle, avoiding a second Nx serve task.
+    reuseExistingServer: false,
     cwd: workspaceRoot
   },
   projects: [
