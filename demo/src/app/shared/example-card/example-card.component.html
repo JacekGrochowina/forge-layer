@@ -1,1 +1,25 @@
-<section class="example-card"><h3>{{ title() }}</h3><div class="preview"><ng-content /></div><div class="code-label">Code</div><pre><code>{{ code() }}</code></pre></section>
+<section class="example-card" [id]="exampleId()" [attr.aria-labelledby]="exampleId() + '-title'">
+  <header>
+    <h3 [id]="exampleId() + '-title'">{{ title() }}</h3>
+    <div class="actions">
+      <a mat-icon-button [routerLink]="[]" [fragment]="exampleId()" [attr.aria-label]="'Link to ' + title()" title="Link to this example">
+        <mat-icon>link</mat-icon>
+      </a>
+      <button mat-icon-button type="button" (click)="copyLink()" [attr.aria-label]="'Copy link to ' + title()" title="Copy link">
+        <mat-icon>content_copy</mat-icon>
+      </button>
+      <button mat-icon-button type="button" (click)="toggleCode()" [attr.aria-expanded]="codeVisible()" [attr.aria-controls]="exampleId() + '-code'" [attr.aria-label]="codeVisible() ? 'Hide code' : 'Show code'" [title]="codeVisible() ? 'Hide code' : 'Show code'">
+        <mat-icon>code</mat-icon>
+      </button>
+    </div>
+  </header>
+  <div class="preview"><ng-content /></div>
+  <div class="code-panel" [id]="exampleId() + '-code'" [hidden]="!codeVisible()">
+    <div class="code-toolbar">
+      <span>HTML</span>
+      <button mat-button type="button" (click)="copyCode()"><mat-icon>content_copy</mat-icon>Copy code</button>
+    </div>
+    <pre><code>{{ code() }}</code></pre>
+  </div>
+  <div class="status" role="status" aria-live="polite">{{ status() }}</div>
+</section>

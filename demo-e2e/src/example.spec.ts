@@ -44,6 +44,7 @@ test.describe('Button playground', () => {
       });
       const control = page.getByRole('combobox', { name: label, exact: true });
       const button = preview.getByRole('button', { name: 'Save', exact: true });
+      await preview.getByRole('button', { name: 'Show code', exact: true }).click();
       for (const value of values) {
         await control.click();
         await page.getByRole('option', { name: value, exact: true }).click();
@@ -99,4 +100,35 @@ test.describe('Button playground', () => {
     await expect(button).toBeEnabled();
     await expect(spinner).toHaveCount(0);
   });
+});
+
+test('examples expose multiline code, clipboard actions and permanent links', async ({ page, context, browserName }) => {
+  // Firefox and WebKit do not support these clipboard permissions.
+  // eslint-disable-next-line playwright/no-skipped-test
+  test.skip(browserName !== 'chromium', 'Clipboard permissions are tested in Chromium.');
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.goto('/components/button');
+  const example = page.locator('#button-icon-placement');
+  await expect(example.locator('pre')).toBeHidden();
+  await example.getByRole('button', { name: 'Show code', exact: true }).click();
+  await expect(example.locator('pre')).toBeVisible();
+  const code = await example.locator('code').innerText();
+  expect(code.split('\n')).toHaveLength(4);
+  expect(code).not.toContain('\\n');
+  await example.getByRole('button', { name: 'Copy code', exact: true }).click();
+  await expect(example.getByRole('status')).toHaveText('Code copied');
+  const copiedCode = await page.evaluate(() => navigator.clipboard.readText());
+  expect(copiedCode.replace(/\r\n/g, '\n')).toBe(code);
+  await example.getByRole('button', { name: 'Copy link to Icon placement', exact: true }).click();
+  await expect(example.getByRole('status')).toHaveText('Link copied');
+  const link = await page.evaluate(() => navigator.clipboard.readText());
+  expect(link).toBe(new URL('/components/button#button-icon-placement', page.url()).href);
+  await example.getByRole('button', { name: 'Hide code', exact: true }).click();
+  await expect(example.locator('pre')).toBeHidden();
+  await example.getByRole('link', { name: 'Link to Icon placement', exact: true }).click();
+  await expect(page).toHaveURL(/\/components\/button#button-icon-placement$/);
+  await page.goto('/');
+  await page.goto(link);
+  await expect(example).toBeInViewport();
+  await expect(example.locator('pre')).toBeHidden();
 });
