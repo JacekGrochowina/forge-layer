@@ -141,7 +141,8 @@ $appearances: 'text', 'filled', 'protected', 'outlined', 'tonal';
   padding-block: var(--forge-button-padding-block);
 }
 
-:host(:not([data-variant='icon'])) .forge-button__control .mat-icon {
+// Match the actual icon to the size used by Material's icon-button padding.
+.forge-button__control .mat-icon {
   font-size: var(--forge-button-icon-size);
   width: var(--forge-button-icon-size);
   height: var(--forge-button-icon-size);
