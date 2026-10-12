@@ -1,4 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/angular-vite';
+import {
+  moduleMetadata,
+  type Meta,
+  type StoryObj,
+} from '@storybook/angular-vite';
 import { expect, fn, userEvent, within } from 'storybook/test';
 import { ForgeButton } from './button';
 import type {
@@ -26,7 +30,7 @@ type ButtonArgs = {
 
 const meta = {
   title: 'Components/Button',
-  component: ForgeButton,
+  decorators: [moduleMetadata({ imports: [ForgeButton] })],
   args: {
     label: 'Save changes',
     variant: 'filled',
@@ -54,16 +58,31 @@ const meta = {
     size: { control: 'select', options: ['sm', 'md', 'lg'] },
     loading: { control: 'boolean' },
     disabled: { control: 'boolean' },
-    icon: { control: 'text' },
-    iconPosition: { control: 'radio', options: ['start', 'end'] },
-    type: { control: 'select', options: ['button', 'submit', 'reset'] },
+    icon: {
+      control: 'text',
+      description:
+        'Material Icons ligature name. Set this to preview iconPosition.',
+    },
+    iconPosition: {
+      control: 'select',
+      options: ['start', 'end'],
+      description:
+        'Visible when an icon is set and the variant is not icon-only.',
+    },
+    type: {
+      control: 'select',
+      options: ['button', 'submit', 'reset'],
+      description: 'Native button behavior; it does not change the appearance.',
+    },
     ariaLabel: {
       control: 'text',
-      description: 'aria-label input; forwarded to the native button.',
+      description:
+        'Accessible name forwarded to the native button; not visible.',
     },
     ariaLabelledby: {
       control: 'text',
-      description: 'aria-labelledby input; ID of the naming element.',
+      description:
+        'ID of the naming element; affects accessibility, not appearance.',
     },
     clicked: { control: false, table: { disable: true } },
   },
