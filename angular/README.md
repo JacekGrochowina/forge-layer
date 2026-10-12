@@ -8,8 +8,8 @@ Application-ready UI components built on Angular Material.
 npm install @forge-layer/angular @angular/material@^22.1.4
 ```
 
-Use Angular 22. The library directly imports `@angular/core` and Material's
-button, icon and progress-spinner entry points. These are its peer dependencies;
+Use Angular 22. The library directly imports `@angular/core`, `@angular/forms` and Material's
+button, icon, progress-spinner, form-field and input entry points. These are its peer dependencies;
 `ng-packagr` adds `tslib` as a runtime dependency. CDK is not imported directly
 by Forge Layer and is not an additional Forge Layer peer. Angular Material
 requires CDK at its own matching version, plus Angular common, forms,
@@ -52,16 +52,20 @@ for FL-10–12 tests. Storybook exposes it under
 **Components/Input/States and validation**. These scenarios specify acceptance
 criteria; they are not runtime tests or interactive component stories yet.
 
-This is a contract for the next implementation tasks; `ForgeInput` and the
-validation exports are not available in the package yet. Storybook includes the
+`ForgeInput`, its value/type aliases and message types are now exported. It
+supports both Reactive Forms bindings, CVA, dynamic required, readonly and
+form-owned disabled. The resolver, application token and error display follow
+in FL-11. Storybook includes the
 contract under **Components/Input/API contract**. Check the examples with:
 
 ```sh
-npx ngc -p tools/input-api-contract/tsconfig.json
+npx nx build angular
+npm run test:input-api
 ```
 
-The fixture verifies strict templates against the approved declaration only;
-runtime forms integration and packaged imports will be verified in FL-10–12.
+The fixture verifies strict templates against the built package declarations.
+Runtime forms behavior is covered by input integration tests; full tarball
+consumer verification follows in FL-12.
 
 ## Theme and icons
 

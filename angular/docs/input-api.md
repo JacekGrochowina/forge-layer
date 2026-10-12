@@ -4,9 +4,10 @@ Source: [Notion implementation plan](https://app.notion.com/p/3c7f493bef5980e0ae
 
 This document specifies the MVP contract and export names approved by the owner
 on 12 October 2026 for FL-09a. The component and validation runtime will be
-implemented in FL-10 and FL-11; these exports are not available in the package yet.
-The compile-only fixture in `tools/input-api-contract` checks both form bindings
-against the agreed input declarations, not runtime forms behavior.
+implemented in FL-10 and FL-11. FL-10 now exports the component and input/message
+types; the resolver, token and error display remain planned for FL-11.
+The fixture in `tools/input-api-contract` checks both form bindings against the
+built package declarations. Runtime CVA and required tests live in `input.spec.ts`.
 
 ## Public exports
 
@@ -115,8 +116,8 @@ which defines acceptance scenarios for FL-10–12.
 ## Target examples
 
 These examples target the agreed API. Both import from the package public entry.
-The compile-only fixture temporarily maps that entry to an API declaration;
-compilation against the real packaged component remains an FL-10 acceptance check.
+The compile-only fixture maps that entry to the built package declarations.
+Build the library before running `npm run test:input-api`.
 
 ```ts
 import { Component } from '@angular/core';

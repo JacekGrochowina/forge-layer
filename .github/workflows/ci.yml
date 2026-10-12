@@ -43,11 +43,11 @@ jobs:
       - name: Unit tests
         run: npx nx run-many -t test -p angular demo --skip-nx-cache --parallel=2
 
-      - name: Compile Input API contract examples
-        run: npm run test:input-api
-
       - name: Production builds
         run: npx nx run-many -t build -p angular demo --configuration=production --skip-nx-cache --parallel=2
+
+      - name: Compile Input API examples against built package
+        run: npm run test:input-api
 
       - name: Install Chromium and system dependencies
         run: npx playwright install --with-deps chromium

@@ -1,0 +1,21 @@
+<mat-form-field>
+  <mat-label>{{ label() }}</mat-label>
+  <input
+    #nativeInput
+    matInput
+    [id]="id() ?? generatedId"
+    [type]="type()"
+    [placeholder]="placeholder()"
+    [name]="name() ?? ''"
+    [attr.autocomplete]="autocomplete() ?? null"
+    [required]="effectiveRequired"
+    [readonly]="readonly()"
+    [disabled]="disabled()"
+    [value]="text()"
+    (input)="handleInput($event)"
+    (blur)="handleBlur()"
+  />
+  @if (hint()) {
+  <mat-hint>{{ hint() }}</mat-hint>
+  }
+</mat-form-field>

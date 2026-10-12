@@ -10,6 +10,7 @@
   "homepage": "https://github.com/JacekGrochowina/forge-layer#readme",
   "license": "MIT",
   "peerDependencies": {
+    "@angular/forms": "^22.0.0",
     "@angular/core": "^22.0.0",
     "@angular/material": "^22.1.4"
   },
