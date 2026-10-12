@@ -64,6 +64,9 @@
     "@angular/router": "~22.0.4",
     "rxjs": "~7.8.0"
   },
+  "overrides": {
+    "resolve": "1.22.11"
+  },
   "nx": {
     "includedScripts": []
   }
