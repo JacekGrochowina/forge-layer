@@ -1,0 +1,62 @@
+<header class="page-header">
+  <p class="breadcrumb">Components</p><h1>Input</h1>
+  <p>ForgeInput combines an accessible Material text field with Angular Forms. The form control owns the value, validation and disabled state.</p>
+</header>
+
+<section>
+  <h2>Overview</h2>
+  <app-example-card exampleId="input-basic" title="Basic input" code="&lt;forge-input label=&quot;Name&quot; placeholder=&quot;Jane Smith&quot; /&gt;">
+    <forge-input label="Name" placeholder="Jane Smith" />
+  </app-example-card>
+</section>
+
+<section>
+  <h2>Playground</h2>
+  <div class="playground">
+    <div class="controls">
+      <mat-form-field><mat-label>Type</mat-label><mat-select [value]="type()" (selectionChange)="type.set($event.value)">
+        @for (item of ['text', 'email', 'password']; track item) { <mat-option [value]="item">{{ item }}</mat-option> }
+      </mat-select></mat-form-field>
+      <mat-slide-toggle [checked]="readonly()" (change)="readonly.set($event.checked)">Readonly</mat-slide-toggle>
+      <mat-slide-toggle [checked]="required()" (change)="required.set($event.checked)">Required</mat-slide-toggle>
+      <mat-slide-toggle [checked]="disabled()" (change)="setDisabled($event.checked)">Disabled</mat-slide-toggle>
+    </div>
+    <app-example-card exampleId="input-preview" title="Preview" [code]="playgroundCode()">
+      <div class="field-stack">
+        <forge-input label="Your value" [type]="type()" placeholder="Enter a value" hint="Try typing, clearing and resetting" [formControl]="control" [readonly]="readonly()" [required]="required()" />
+        <p class="status">Value: {{ control.value === null ? 'null' : control.value }} · Status: {{ control.status }}</p>
+        <forge-button variant="outlined" (click)="control.reset()">Reset value</forge-button>
+      </div>
+    </app-example-card>
+  </div>
+</section>
+
+<section>
+  <h2>Input types</h2>
+  <app-example-card exampleId="input-types" title="Text, email and password" code="&lt;forge-input label=&quot;Name&quot; autocomplete=&quot;name&quot; /&gt;&#10;&lt;forge-input label=&quot;Email address&quot; type=&quot;email&quot; autocomplete=&quot;email&quot; /&gt;&#10;&lt;forge-input label=&quot;Account password&quot; type=&quot;password&quot; autocomplete=&quot;current-password&quot; /&gt;">
+    <div class="field-stack"><forge-input label="Name" autocomplete="name" /><forge-input label="Email address" type="email" autocomplete="email" /><forge-input label="Account password" type="password" autocomplete="current-password" /></div>
+  </app-example-card>
+</section>
+
+<section>
+  <h2>Readonly and disabled</h2>
+  <app-example-card exampleId="input-states" title="Form states" code="readonlyControl = new FormControl('You can copy this value');&#10;disabledControl = new FormControl({ value: 'Unavailable', disabled: true });&#10;&#10;&lt;forge-input label=&quot;Readonly value&quot; readonly [formControl]=&quot;readonlyControl&quot; /&gt;&#10;&lt;forge-input label=&quot;Disabled value&quot; [formControl]=&quot;disabledControl&quot; /&gt;">
+    <div class="field-stack"><forge-input label="Readonly value" readonly [formControl]="readonlyControl" /><forge-input label="Disabled value" [formControl]="disabledControl" /></div>
+  </app-example-card>
+</section>
+
+<section>
+  <h2>Reactive form</h2>
+  <app-example-card exampleId="input-reactive-form" title="Validation and reset" [code]="formCode">
+    <form class="field-stack" [formGroup]="form" #formDirective="ngForm" (ngSubmit)="form.markAllAsTouched()">
+      <forge-input label="Email" type="email" autocomplete="email" name="email" formControlName="email" hint="Required, valid email address" />
+      <forge-input label="Password" type="password" autocomplete="new-password" formControlName="password" hint="At least 8 characters" />
+      <p class="status" aria-live="polite">Form: {{ form.status }} · Submitted: {{ formDirective.submitted }}</p>
+      <div class="actions"><forge-button type="submit">Submit</forge-button><forge-button type="button" variant="outlined" (click)="formDirective.resetForm()">Reset form</forge-button></div>
+    </form>
+  </app-example-card>
+  <p class="note">Validators update the form status. Validation message display is planned; errorMessages currently has no visual effect.</p>
+</section>
+
+<section><h2>API</h2><app-api-table [properties]="api" /><p class="note">Bind with formControl or formControlName. Use control.disable() and control.enable() to change the disabled state.</p></section>
+<section><h2>Accessibility</h2><p class="note">Always supply a meaningful label. Material associates the label and hint with the native input. Readonly fields remain focusable; disabled fields are skipped during keyboard navigation. Use autocomplete to help browsers fill familiar fields.</p></section>
