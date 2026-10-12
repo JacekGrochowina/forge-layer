@@ -109,7 +109,8 @@ parent form is submitted. Dirty alone is insufficient; pending is not an error.
 Programmatic `setErrors`, `markAllAsTouched` and disabled changes must refresh UI.
 Control reset restores its value and pristine/untouched state, but does not clear
 parent submitted. `FormGroupDirective.resetForm()` also clears submitted. These
-rules will be expanded into the FL-09b test matrix.
+rules are expanded into the [FL-09b state and validation matrix](input-state-matrix.md),
+which defines acceptance scenarios for FL-10–12.
 
 ## Target examples
 

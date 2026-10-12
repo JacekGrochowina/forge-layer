@@ -39,12 +39,18 @@ export class Example {
 The package also exports `ForgeButtonColor`, `ForgeButtonSize`,
 `ForgeButtonIconPosition` and `ForgeButtonType`.
 
-## Input API contract (FL-09a)
+## Input contract (FL-09a–b)
 
 The approved [Forge Input contract](docs/input-api.md) specifies public export
 names, inputs and defaults, string/null value rules, required and readonly, and
 Reactive Forms ownership of values and disabled. It includes examples for
 `[formControl]` and `formControlName` and the message resolver/configuration API.
+
+The [state and validation matrix](docs/input-state-matrix.md) defines expected
+messages, error visibility, required changes, readonly/disabled and reset behavior
+for FL-10–12 tests. Storybook exposes it under
+**Components/Input/States and validation**. These scenarios specify acceptance
+criteria; they are not runtime tests or interactive component stories yet.
 
 This is a contract for the next implementation tasks; `ForgeInput` and the
 validation exports are not available in the package yet. Storybook includes the
