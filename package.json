@@ -6,6 +6,7 @@
     "node": ">=24.15.0 <25"
   },
   "scripts": {
+    "test:input-api": "ngc -p tools/input-api-contract/tsconfig.json",
     "test:package": "node tools/package-smoke.mjs",
     "storybook": "nx run angular:storybook",
     "build-storybook": "nx run angular:build-storybook",

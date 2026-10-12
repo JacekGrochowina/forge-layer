@@ -39,6 +39,24 @@ export class Example {
 The package also exports `ForgeButtonColor`, `ForgeButtonSize`,
 `ForgeButtonIconPosition` and `ForgeButtonType`.
 
+## Input API contract (FL-09a)
+
+The approved [Forge Input contract](docs/input-api.md) specifies public export
+names, inputs and defaults, string/null value rules, required and readonly, and
+Reactive Forms ownership of values and disabled. It includes examples for
+`[formControl]` and `formControlName` and the message resolver/configuration API.
+
+This is a contract for the next implementation tasks; `ForgeInput` and the
+validation exports are not available in the package yet. Storybook includes the
+contract under **Components/Input/API contract**. Check the examples with:
+
+```sh
+npx ngc -p tools/input-api-contract/tsconfig.json
+```
+
+The fixture verifies strict templates against the approved declaration only;
+runtime forms integration and packaged imports will be verified in FL-10–12.
+
 ## Theme and icons
 
 Configure a Material theme in the application's global SCSS:

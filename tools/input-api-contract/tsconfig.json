@@ -1,0 +1,11 @@
+{
+  "extends": "../../angular/tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "paths": { "@forge-layer/angular": ["./api.ts"] },
+    "types": []
+  },
+  "files": ["api.ts", "examples.ts"],
+  "include": [],
+  "references": []
+}
