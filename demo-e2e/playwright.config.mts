@@ -3,7 +3,9 @@ import { nxE2EPreset } from '@nx/playwright/preset';
 import { workspaceRoot } from '@nx/devkit';
 
 // For CI, you may want to set BASE_URL to the deployed application.
-const baseURL = process.env['BASE_URL'] || 'http://localhost:4200';
+const port = process.env['PLAYWRIGHT_PORT'] || '4200';
+const serverURL = `http://localhost:${port}`;
+const baseURL = process.env['BASE_URL'] || serverURL;
 
 /**
  * Read environment variables from file.
@@ -23,34 +25,51 @@ const baseURL = process.env['BASE_URL'] || 'http://localhost:4200';
  */
 export default defineConfig({
   ...nxE2EPreset(import.meta.dirname, { testDir: './src' }),
+  forbidOnly: !!process.env['CI'],
+  // A failed test must fail CI even if it would pass on a retry.
+  retries: 0,
+  workers: process.env['CI'] ? 1 : undefined,
+  reporter: process.env['CI']
+    ? [
+        ['list'],
+        [
+          'html',
+          {
+            outputFolder: 'dist/.playwright/demo-e2e/playwright-report',
+            open: 'never',
+          },
+        ],
+      ]
+    : 'list',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     baseURL,
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    /* Keep diagnostics from the initial failure, without requiring a retry. */
+    trace: 'retain-on-failure',
+    screenshot: 'only-on-failure',
   },
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npx nx run demo:serve',
-    url: 'http://localhost:4200',
+    command: `npx nx run demo:serve --port=${port}`,
+    url: serverURL,
     // Let Playwright own the server lifecycle, avoiding a second Nx serve task.
     reuseExistingServer: false,
-    cwd: workspaceRoot
+    cwd: workspaceRoot,
   },
   projects: [
     {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
     },
 
     {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
     },
 
     {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
     },
 
     // Uncomment for mobile browsers support

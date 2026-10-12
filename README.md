@@ -145,8 +145,29 @@ npx nx run demo-e2e:e2e --skip-nx-cache -- --project=chromium
 ```
 
 Playwright starts and stops the demo server. Port 4200 must be available.
+Set `PLAYWRIGHT_PORT` to use another port if a local demo is already running.
 The scenarios cover the home page, navigation to Button, playground variants,
 sizes and colors, and loading/disabled states.
+
+## Continuous integration
+
+The `CI` workflow runs on every pull request and push to `master`, and can also
+be started manually in GitHub Actions. It uses Node.js from `.nvmrc`, `npm ci`,
+lint for all three projects, unit tests, production builds of the library and
+demo, and Playwright Chromium. Nx task caching is disabled for these checks.
+Any failed check fails the workflow; E2E tests run without retries.
+
+After an E2E failure, download the `playwright-failure` artifact from the workflow
+run (retained for 14 days). It contains the HTML report and test output, including
+traces and failure screenshots. Open the extracted report and traces with:
+
+```sh
+npx playwright show-report dist/.playwright/demo-e2e/playwright-report
+npx playwright show-trace <path-to-trace.zip>
+```
+
+To require passing CI before merging, configure the repository's branch protection
+or ruleset to require the `Lint, test, build and Chromium E2E` status check.
 
 ## License
 

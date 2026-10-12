@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Lint, test, build and Chromium E2E
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CI: 'true'
+      NX_DAEMON: 'false'
+      NX_NO_CLOUD: 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies from lockfile
+        run: npm ci
+
+      - name: Lint
+        run: npx nx run-many -t lint -p angular demo demo-e2e --skip-nx-cache --parallel=2
+
+      - name: Unit tests
+        run: npx nx run-many -t test -p angular demo --skip-nx-cache --parallel=2
+
+      - name: Production builds
+        run: npx nx run-many -t build -p angular demo --configuration=production --skip-nx-cache --parallel=2
+
+      - name: Install Chromium and system dependencies
+        run: npx playwright install --with-deps chromium
+
+      - name: Chromium E2E
+        id: e2e
+        run: npx nx run demo-e2e:e2e --skip-nx-cache -- --project=chromium
+
+      - name: Upload Playwright failure report and traces
+        if: ${{ failure() && steps.e2e.outcome == 'failure' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-failure
+          path: |
+            dist/.playwright/demo-e2e/playwright-report/
+            dist/.playwright/demo-e2e/test-output/
+          retention-days: 14
+          if-no-files-found: warn
