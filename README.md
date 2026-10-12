@@ -171,4 +171,30 @@ or ruleset to require the `Lint, test, build and Chromium E2E` status check.
 
 ## License
 
-TBD
+MIT — selected by the project owner, Jacek Grochowina. See [LICENSE](LICENSE).
+
+## Package verification
+
+```sh
+npx playwright install chromium
+npm run test:package
+```
+
+This builds the production library, audits external imports in ng-packagr's
+output against the manifest, and packs `dist/angular`. It installs the tarball
+with `--strict-peer-deps` into an independent Angular application in the OS
+temporary directory, with its own dependencies and no source aliases.
+The consumer uses the exact Angular/Material/toolchain versions installed in
+this checkout; this checks that baseline, not every version in the peer ranges.
+
+The test verifies packaged metadata, LICENSE, declarations and runtime bundle,
+compiles all public button types and a Material SCSS theme, then uses Chromium
+to check clicks, loading, icon placement, real icon-font ligatures and theme
+styles. npm installation and downloading the Material Icons font require
+network access; the browser uses the downloaded font locally. The temporary
+consumer and tarball are retained for inspection; a screenshot is written to
+`dist/package-smoke/consumer.png`. Nothing is published to npm.
+
+For installation and theme/icon setup, see [the package README](angular/README.md).
+Forge Layer directly requires Core and Material; CDK is required transitively
+by Material and is not a Forge Layer peer dependency.

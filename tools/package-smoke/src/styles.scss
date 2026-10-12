@@ -1,0 +1,13 @@
+@use '@angular/material' as mat;
+html {
+  @include mat.theme(
+    (
+      color: mat.$violet-palette,
+      typography: Arial,
+      density: 0,
+    )
+  );
+}
+.material-icons {
+  font-family: 'Material Icons';
+}

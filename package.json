@@ -6,6 +6,7 @@
     "node": ">=24.15.0 <25"
   },
   "scripts": {
+    "test:package": "node tools/package-smoke.mjs",
     "storybook": "nx run angular:storybook",
     "build-storybook": "nx run angular:build-storybook",
     "verify": "nx run-many -t lint test build -p angular demo --skip-nx-cache --parallel=2"
