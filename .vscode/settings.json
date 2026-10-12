@@ -1,0 +1,6 @@
+{
+    "chat.permissions.default": "autoApprove",
+    "chat.tools.terminal.autoApprove": {
+        "npm run build-storybook": true
+    }
+}
